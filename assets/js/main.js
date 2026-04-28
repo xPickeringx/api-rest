@@ -33,3 +33,11 @@ citySelect.addEventListener('change', async (event) => {
         }
     }
 });
+
+// Variable del botón toggle
+const unitToggle = document.getElementById('unit-toggle');
+
+// Escuchar el evento del botón de grados
+unitToggle.addEventListener('change', () => {
+    ui.toggleUnit();
+});
