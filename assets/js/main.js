@@ -1,43 +1,45 @@
-import { WeatherAPI } from './api.js';
+import { WeatherAPI, IPGeoAPI } from './api.js';
 import { UI } from './ui.js';
 
-// Inicializar Clases (Ingresa tu API Key real)
+// Inicializar Clases
 const weatherAPI = new WeatherAPI("0866e90d8dmsh7cf0fede1dc8d1ep1dba6ejsn6844f5a51dc6");
+const ipGeoAPI = new IPGeoAPI("b1e35d4898b144a99864fc773757229e"); 
 const ui = new UI();
 
-// Variables del DOM
+// Variables del DOM (Declaradas una sola vez)
 const citySelect = document.getElementById('city-select');
+const unitToggle = document.getElementById('unit-toggle');
 
-// Escuchar el evento 'change' del select
+// --- Cargar la IP al iniciar la aplicación ---
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Obtenemos la ubicación de la IP indicada
+        const ipData = await ipGeoAPI.getIPLocation(""); 
+        ui.showIPLocation(ipData);
+    } catch (error) {
+        ui.showIPLocation(null); 
+    }
+});
+
+// --- Escuchar el evento 'change' del select de ciudades ---
 citySelect.addEventListener('change', async (event) => {
     const selectedCity = event.target.value;
     
     if(selectedCity) {
-        // 1. Mostrar estado de carga en la Interfaz (tarjeta)
         ui.showLoading();
 
         try {
-            // 2. Hacer la solicitud a la API
             const weatherData = await weatherAPI.getWeatherData(selectedCity);
-            
-            // --- NUEVO FLUJO INTEGRADO ---
-            // 3. Actualizar la animación de fondo basándose en el ID del clima (weather[0].id)
             ui.updateBackgroundAnimation(weatherData.weather[0].id);
-
-            // 4. Imprimir el resultado detallado en la Interfaz (tarjeta)
             ui.showWeather(weatherData);
             
         } catch (error) {
-            // 5. Manejar errores si falla la API
             ui.showError("No se pudo obtener el clima. Verifica tu conexión o API Key.");
         }
     }
 });
 
-// Variable del botón toggle
-const unitToggle = document.getElementById('unit-toggle');
-
-// Escuchar el evento del botón de grados
+// --- Escuchar el evento del botón de grados ---
 unitToggle.addEventListener('change', () => {
     ui.toggleUnit();
 });

@@ -29,3 +29,30 @@ export class WeatherAPI {
         }
     }
 }
+
+// NUEVA CLASE: Para manejar la geolocalización por IP
+export class IPGeoAPI {
+    constructor(apiKey) {
+        // ATENCIÓN: Coloca aquí tu API Key de ipgeolocation.io
+        this.apiKey = apiKey || "b1e35d4898b144a99864fc773757229e"; 
+        this.baseURL = "https://api.ipgeolocation.io/v3/ipgeo";
+    }
+
+    async getIPLocation(ip = "") {
+        // Si pasas una IP como parámetro, la busca; si lo dejas vacío, detecta la tuya automáticamente.
+        const ipParam = ip ? `&ip=${ip}` : "";
+        const url = `${this.baseURL}?apiKey=${this.apiKey}${ipParam}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Error HTTP IPGeo: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Hubo un error al consultar la API de IP:", error);
+            throw error;
+        }
+    }
+}

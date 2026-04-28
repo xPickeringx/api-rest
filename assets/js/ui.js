@@ -3,12 +3,32 @@ export class UI {
         this.resultContainer = document.getElementById('weather-result');
         this.backgroundContainer = document.getElementById('weather-background');
         this.unitLabel = document.getElementById('unit-label');
+        this.ipContainer = document.getElementById('ip-location-container');
         
         // NUEVO: Estado interno de la UI
         this.currentUnit = 'C'; // Empezamos en Celsius por defecto en Latam
         this.currentWeatherData = null; // Aquí guardaremos los datos de la API
     }
 
+    // NUEVO: Método para mostrar los datos de la IP
+    showIPLocation(data) {
+        if (!data) {
+            this.ipContainer.innerHTML = `<span class="text-danger small"><i class="bi bi-wifi-off"></i> Error al cargar IP</span>`;
+            return;
+        }
+
+        const { ip, location } = data;
+        
+        this.ipContainer.innerHTML = `
+            <div class="d-flex flex-column align-items-end lh-sm fade-in-up">
+                <span class="fw-bold text-dark d-flex align-items-center fs-6">
+                    <img src="${location.country_flag}" alt="${location.country_name}" width="20" class="me-2 border border-1 border-secondary rounded-1 shadow-sm"> 
+                    ${location.city}, ${location.country_name} ${location.country_emoji}
+                </span>
+                <span style="font-size: 0.8rem;"><i class="bi bi-hdd-network text-primary"></i> IP: ${ip}</span>
+            </div>
+        `;
+    }
     // NUEVO: Método para alternar las unidades y volver a renderizar
     toggleUnit() {
         if (this.currentUnit === 'C') {

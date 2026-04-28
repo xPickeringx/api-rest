@@ -199,3 +199,38 @@ body {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* =========================================
+   ESTILOS DEL FOOTER PROFESIONAL
+   ========================================= */
+
+/* Hacemos el footer un poco más translúcido para que destaque menos que la tarjeta principal */
+.glass-footer {
+    background: rgba(255, 255, 255, 0.45) !important; 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 10;
+}
+
+/* Animación para los iconos de redes sociales */
+.social-icon {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+}
+
+.social-icon:hover {
+    transform: translateY(-4px) scale(1.1);
+    color: #0d6efd !important; /* Cambia a azul de Bootstrap al pasar el ratón */
+    filter: drop-shadow(0 4px 6px rgba(13, 110, 253, 0.3));
+}
+
+/* Animación sutil para enlaces de texto */
+.hover-link {
+    transition: opacity 0.2s ease;
+}
+
+.hover-link:hover {
+    opacity: 0.7;
+    text-decoration: underline !important;
+}
