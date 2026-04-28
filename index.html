@@ -13,6 +13,8 @@
 </head>
 <body class="d-flex flex-column min-vh-100 modern-bg">
 
+    <div id="weather-background"></div>
+
     <nav class="navbar navbar-expand-lg navbar-light glass-nav mb-4">
         <div class="container">
             <a class="navbar-brand fw-bold text-primary" href="#">
@@ -29,16 +31,50 @@
                     <h3 class="text-center fw-bold text-dark mb-4">¿Cómo está el clima hoy?</h3>
                     
                     <div class="mb-4 position-relative">
-                        <i class="bi bi-geo-alt-fill position-absolute text-primary" style="top: 50%; left: 15px; transform: translateY(-50%); font-size: 1.2rem;"></i>
-                        <select id="city-select" class="form-select form-select-lg modern-select ps-5">
-                            <option value="" disabled selected>Selecciona tu ciudad...</option>
-                            <option value="Mexico City">Ciudad de México</option>
-                            <option value="Monterrey">Monterrey</option>
-                            <option value="Guadalajara">Guadalajara</option>
-                            <option value="Cancun">Cancún</option>
-                            <option value="Pachuca">Pachuca</option>
-                        </select>
-                    </div>
+    <i class="bi bi-geo-alt-fill position-absolute text-primary" style="top: 50%; left: 15px; transform: translateY(-50%); font-size: 1.2rem; z-index: 10;"></i>
+    
+    <select id="city-select" class="form-select form-select-lg modern-select ps-5">
+        <option value="" disabled selected>Selecciona una ciudad...</option>
+        
+        <optgroup label="🇲🇽 México">
+            <option value="Mexico City">Ciudad de México</option>
+            <option value="Monterrey">Monterrey</option>
+            <option value="Guadalajara">Guadalajara</option>
+            <option value="Cancun">Cancún</option>
+            <option value="Pachuca">Pachuca</option>
+        </optgroup>
+
+        <optgroup label="🇺🇸 Estados Unidos">
+            <option value="New York">Nueva York</option>
+            <option value="Los Angeles">Los Ángeles</option>
+            <option value="Chicago">Chicago</option>
+        </optgroup>
+
+        <optgroup label="🇫🇷 Francia">
+            <option value="Paris">París</option>
+            <option value="Marseille">Marsella</option>
+        </optgroup>
+
+        <optgroup label="🇯🇵 Japón">
+            <option value="Tokyo">Tokio</option>
+            <option value="Osaka">Osaka</option>
+        </optgroup>
+
+        <optgroup label="🇦🇺 Australia">
+            <option value="Sydney">Sídney</option>
+            <option value="Melbourne">Melbourne</option>
+        </optgroup>
+
+        <optgroup label="🇪🇬 Egipto">
+            <option value="Cairo">El Cairo</option>
+        </optgroup>
+
+        <optgroup label="🇧🇷 Brasil">
+            <option value="Rio de Janeiro">Río de Janeiro</option>
+            <option value="Sao Paulo">São Paulo</option>
+        </optgroup>
+    </select>
+</div>
 
                     <div id="weather-result" class="mt-4">
                         </div>

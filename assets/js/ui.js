@@ -1,9 +1,35 @@
 export class UI {
     constructor() {
         this.resultContainer = document.getElementById('weather-result');
+        // NUEVO: Referencia al contenedor de animación de fondo
+        this.backgroundContainer = document.getElementById('weather-background');
+    }
+
+    // Método para mapear el ID del clima a una clase CSS de animación
+    updateBackgroundAnimation(weatherId) {
+        // Mapeo basado en rangos de ID estándar de OpenWeatherMap
+        let bgClass = 'modern-bg'; // Clase por defecto
+
+        if (weatherId >= 200 && weatherId < 300) {
+            bgClass = 'state-thunder'; // Tormenta
+        } else if ((weatherId >= 300 && weatherId < 400) || (weatherId >= 500 && weatherId < 600)) {
+            bgClass = 'state-rain'; // Llovizna o Lluvia
+        } else if (weatherId >= 600 && weatherId < 700) {
+            bgClass = 'state-snow'; // Nieve
+        } else if (weatherId === 800) {
+            bgClass = 'state-clear'; // Despejado/Soleado
+        } else if (weatherId > 800 && weatherId < 900) {
+            bgClass = 'state-clouds'; // Nublado
+        }
+
+        // Limpiar todas las clases existentes y aplicar la nueva suavemente
+        this.backgroundContainer.className = ''; // Resetear
+        this.backgroundContainer.classList.add(bgClass);
     }
 
     showLoading() {
+        // Mantenemos la lógica existente, pero aseguramos resetear el fondo si hay error previo
+        // this.backgroundContainer.className = ''; 
         this.resultContainer.innerHTML = `
             <div class="text-center fade-in-up py-4">
                 <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
@@ -15,6 +41,8 @@ export class UI {
     }
 
     showError(message) {
+        // Resetear animación de fondo en caso de error
+        this.backgroundContainer.className = ''; 
         this.resultContainer.innerHTML = `
             <div class="alert alert-danger fade-in-up rounded-4 border-0 shadow-sm d-flex align-items-center" role="alert">
                 <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
@@ -27,6 +55,7 @@ export class UI {
         const { name, main, weather, wind, visibility } = data;
         const iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@4x.png`;
 
+        // Actualizar la estructura HTML inyectada (mantenemos la existente profesional)
         this.resultContainer.innerHTML = `
             <div class="text-center fade-in-up mt-2">
                 <h2 class="fw-bold mb-0">${name}</h2>
